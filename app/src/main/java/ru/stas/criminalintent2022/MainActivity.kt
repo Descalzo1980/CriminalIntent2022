@@ -13,10 +13,10 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val fragment = CrimeDetailFragment()
-        supportFragmentManager
-            .beginTransaction()
-            .add(R.id.fragment_container,fragment)
-            .commitNow()
+//        val fragment = CrimeDetailFragment()
+//        supportFragmentManager
+//            .beginTransaction()
+//            .add(R.id.fragment_container,fragment)
+//            .commitNow()
     }
 }

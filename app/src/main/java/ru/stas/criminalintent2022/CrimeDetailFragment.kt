@@ -11,23 +11,20 @@ import androidx.fragment.app.viewModels
 import ru.stas.criminalintent2022.databinding.FragmentCrimeDetailBinding
 import java.util.*
 
-private const val TAG = "CrimeListFragment"
+
 
 class CrimeDetailFragment : Fragment(){
 
     private var _binding: FragmentCrimeDetailBinding? = null
     private val binding
         get() = checkNotNull(_binding) {
-            "Cannot access binding because it is null. Is the view visible?"
+           "Cannot access binding because it is null. Is the view visible?"
         }
 
     private lateinit var crime: Crime
 
-    private val crimeListViewModel: CrimeListViewModel by viewModels()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d(TAG,"И вот они, преступления {${crimeListViewModel.crimes.size} штук}")
         crime = Crime(
             id = UUID.randomUUID(),
             title = "",
