@@ -29,6 +29,7 @@ class CrimeDetailFragment : Fragment(){
             id = UUID.randomUUID(),
             title = "",
             date = Date(),
+            pic = R.drawable.dirty_cup,
             isSolved = false
         )
     }

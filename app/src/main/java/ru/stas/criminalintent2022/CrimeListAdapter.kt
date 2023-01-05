@@ -20,6 +20,7 @@ class CrimeListAdapter(private val crimes : List<Crime>) : RecyclerView.Adapter<
         holder.apply {
             binding.crimeTitle.text = crime.title
             binding.crimeDate.text = crime.date.toString()
+            binding.crimeDirtyCup.resources.getDrawable(R.drawable.dirty_cup)
         }
     }
 

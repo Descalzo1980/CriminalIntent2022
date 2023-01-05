@@ -13,7 +13,8 @@ class CrimeListViewModel: ViewModel() {
                 id = UUID.randomUUID(),
                 title = "Ну да, опять кружка",
                 date = Date(),
-                isSolved = i % 2 == 0
+                isSolved = i % 2 == 0,
+                pic = R.drawable.dirty_cup
             )
             crimes += crime
         }
