@@ -1,14 +1,13 @@
 package ru.stas.criminalintent2022
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doOnTextChanged
-import androidx.fragment.app.viewModels
 import ru.stas.criminalintent2022.databinding.FragmentCrimeDetailBinding
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 
@@ -29,8 +28,7 @@ class CrimeDetailFragment : Fragment(){
             id = UUID.randomUUID(),
             title = "",
             date = Date(),
-            pic = R.drawable.dirty_cup,
-            isSolved = false
+            isSolved = false,
         )
     }
 

@@ -1,12 +1,10 @@
 package ru.stas.criminalintent2022
 
-import java.util.Date
-import java.util.UUID
+import java.util.*
 
 data class Crime(
     val id: UUID,
     val title: String,
     val date: Date,
-    val pic: Int,
-    val isSolved: Boolean
+    val isSolved: Boolean,
 )
