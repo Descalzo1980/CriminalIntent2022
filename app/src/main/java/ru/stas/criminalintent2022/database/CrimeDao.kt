@@ -7,9 +7,10 @@ import java.util.UUID
 
 @Dao
 interface CrimeDao {
+
     @Query("SELECT * FROM crime")
-    suspend fun getCrimes(crime: Crime)
+    suspend fun getCrimes(): List<Crime>
 
     @Query("SELECT * FROM crime WHERE id=(:id)")
-    suspend fun getCrime(id: UUID)
+    suspend fun getCrime(id: UUID): Crime
 }

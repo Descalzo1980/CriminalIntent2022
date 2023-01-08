@@ -42,7 +42,7 @@ class CrimeListFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED){
-                val crimes = crimeListViewModel.loadCrime()
+                val crimes = crimeListViewModel.loadCrimes()
                 binding.crimeRecyclerView.adapter = CrimeListAdapter(crimes)
             }
         }
