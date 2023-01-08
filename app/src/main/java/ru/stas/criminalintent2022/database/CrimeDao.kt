@@ -2,6 +2,7 @@ package ru.stas.criminalintent2022.database
 
 import androidx.room.Dao
 import androidx.room.Query
+import kotlinx.coroutines.flow.Flow
 import ru.stas.criminalintent2022.Crime
 import java.util.UUID
 
@@ -9,7 +10,7 @@ import java.util.UUID
 interface CrimeDao {
 
     @Query("SELECT * FROM crime")
-    suspend fun getCrimes(): List<Crime>
+    fun getCrimes(): Flow<List<Crime>>
 
     @Query("SELECT * FROM crime WHERE id=(:id)")
     suspend fun getCrime(id: UUID): Crime
