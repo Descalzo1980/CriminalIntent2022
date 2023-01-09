@@ -3,9 +3,11 @@ package ru.stas
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import androidx.room.Update
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import ru.stas.criminalintent2022.Crime
 import ru.stas.criminalintent2022.CrimeRepository
@@ -19,6 +21,12 @@ class CrimeDetailViewModel(crimeId: UUID):ViewModel() {
     init {
         viewModelScope.launch {
             _crime.value = crimeRepository.getCrime(crimeId)
+        }
+    }
+
+    fun updateCrime(onUpdate: (Crime)-> Crime){
+        _crime.update { oldCrime ->
+            oldCrime?.let{onUpdate(it) }
         }
     }
 }
