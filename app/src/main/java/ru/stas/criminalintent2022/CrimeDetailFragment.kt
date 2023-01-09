@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doOnTextChanged
 import ru.stas.criminalintent2022.databinding.FragmentCrimeDetailBinding
+import java.time.format.DateTimeFormatter
 import java.util.*
+
 
 
 class CrimeDetailFragment : Fragment(){
@@ -15,7 +17,7 @@ class CrimeDetailFragment : Fragment(){
     private var _binding: FragmentCrimeDetailBinding? = null
     private val binding
         get() = checkNotNull(_binding) {
-            "Cannot access binding because it is null. Is the view visible?"
+           "Cannot access binding because it is null. Is the view visible?"
         }
 
     private lateinit var crime: Crime
@@ -26,7 +28,7 @@ class CrimeDetailFragment : Fragment(){
             id = UUID.randomUUID(),
             title = "",
             date = Date(),
-            isSolved = false
+            isSolved = false,
         )
     }
 
