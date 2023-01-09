@@ -1,7 +1,6 @@
 package ru.stas.criminalintent2022
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,14 +9,12 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import ru.stas.criminalintent2022.databinding.FragmentCrimeDetailBinding
 import ru.stas.criminalintent2022.databinding.FragmentCrimeListBinding
 
-private const val TAG = "CrimeListFragment"
+
 
 class CrimeListFragment: Fragment() {
 
@@ -33,7 +30,7 @@ class CrimeListFragment: Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentCrimeListBinding.inflate(inflater,container,false)
         binding.crimeRecyclerView.layoutManager = LinearLayoutManager(context)
         return binding.root
@@ -44,7 +41,9 @@ class CrimeListFragment: Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 crimeListViewModel.crimes.collect { crimes ->
-                binding.crimeRecyclerView.adapter = CrimeListAdapter(crimes)
+                binding.crimeRecyclerView.adapter = CrimeListAdapter(crimes){crimeId ->
+                    findNavController().navigate(CrimeListFragmentDirections.showCrimeDetail(crimeId))
+                }
                 }
             }
         }
