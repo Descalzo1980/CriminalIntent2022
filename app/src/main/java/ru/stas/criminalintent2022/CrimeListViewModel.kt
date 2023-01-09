@@ -1,23 +1,16 @@
 package ru.stas.criminalintent2022
 
 import androidx.lifecycle.ViewModel
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
-import java.util.*
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 
-class CrimeListViewModel: ViewModel() {
+class CrimeListViewModel : ViewModel() {
+    private val crimeRepository = CrimeRepository.get()
+    val crimes = crimeRepository.getCrimes()
 
-    val crimes = mutableListOf<Crime>()
     init {
-        for (i in 0 until 100){
-            val crime = Crime(
-                id = UUID.randomUUID(),
-                title = "Ну да, опять кружка",
-                date = Date(),
-                isSolved = i % 2 == 0
-            )
-            crimes += crime
+        viewModelScope.launch {
+
         }
     }
-
 }
