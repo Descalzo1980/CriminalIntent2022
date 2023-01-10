@@ -43,8 +43,7 @@ class CrimeDetailFragment : Fragment(){
                 if (binding.crimeTitle.text.isEmpty()) {
                     Toast.makeText(context,"Заполните заголовок",Toast.LENGTH_SHORT).show()
                 } else {
-                    // default onBackPressed() behavior
-                    isEnabled = false // DON'T FORGET THIS!
+                    isEnabled = false
                     requireActivity().onBackPressedDispatcher.onBackPressed()
                 }
             }
