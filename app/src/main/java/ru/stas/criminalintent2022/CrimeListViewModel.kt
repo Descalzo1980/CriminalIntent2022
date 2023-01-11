@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import java.util.UUID
 
 class CrimeListViewModel : ViewModel() {
     private val crimeRepository = CrimeRepository.get()
@@ -21,4 +22,8 @@ class CrimeListViewModel : ViewModel() {
             }
         }
     }
+    suspend fun addCrime(crime: Crime){
+        crimeRepository.addCrime(crime)
+    }
+
 }
