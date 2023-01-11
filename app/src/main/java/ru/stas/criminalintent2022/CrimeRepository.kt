@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.room.Room
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import ru.stas.criminalintent2022.database.CrimeDatabase

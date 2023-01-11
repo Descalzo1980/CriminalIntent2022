@@ -24,5 +24,24 @@
         <argument
             android:name="crimeId"
             app:argType="java.util.UUID" />
+        <action
+            android:id="@+id/select_data"
+            app:destination="@id/datePickerFragment" />
     </fragment>
+    <dialog
+        android:id="@+id/datePickerFragment"
+        android:name="ru.stas.criminalintent2022.DatePickerFragment"
+        android:label="DatePickerFragment" >
+        <argument
+            android:name="crimeDate"
+            app:argType="java.util.Date" />
+    </dialog>
+    <dialog
+        android:id="@+id/timePickerFragment"
+        android:name="ru.stas.criminalintent2022.TimePickerFragment"
+        android:label="TimePickerFragment" >
+        <argument
+            android:name="crimeHours"
+            app:argType="java.util.Date" />
+    </dialog>
 </navigation>

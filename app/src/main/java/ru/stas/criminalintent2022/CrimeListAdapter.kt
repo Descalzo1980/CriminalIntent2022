@@ -18,10 +18,12 @@ class CrimeListAdapter(
     inner class CrimeHolder(private val binding: ListItemCrimeBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(crime: Crime, onCrimeClicked:(crimeId: UUID)->Unit) {
             binding.crimeTitle.text = crime.title
-            val current = LocalDateTime.now()
-            val simpleDateFormat = DateTimeFormatter.ofPattern(""""EEEE,MMMM dd, yyyy"""")
-            val formatted = current.format(simpleDateFormat)
-            binding.crimeDate.text = formatted.toString()
+            /*с форматирование не работает перезапись времени*/
+//            val current = LocalDateTime.now()
+//            val simpleDateFormat = DateTimeFormatter.ofPattern(""""EEEE,MMMM dd, yyyy"""")
+//            val formatted = current.format(simpleDateFormat)
+//            binding.crimeDate.text = formatted.toString()
+            binding.crimeDate.text = crime.date.toString()
             binding.root.setOnClickListener {
                 onCrimeClicked(crime.id)
             }
