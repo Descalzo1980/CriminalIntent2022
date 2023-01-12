@@ -1,6 +1,7 @@
 package ru.stas.criminalintent2022
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.text.format.DateFormat
 import android.view.LayoutInflater
@@ -8,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
@@ -38,6 +40,11 @@ class CrimeDetailFragment : Fragment(){
     private val crimeDetailViewModel: CrimeDetailViewModel by viewModels {
         CrimeDetailViewModelFactory(args.crimeId)
     }
+
+    private val selectSuspect = registerForActivityResult(
+        ActivityResultContracts.PickContact()
+    ){uri: Uri? -> }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -86,6 +93,9 @@ class CrimeDetailFragment : Fragment(){
                 }
             }
         }
+        binding.crimeSuspect.setOnClickListener {
+            selectSuspect.launch(null)
+        }
     }
 
     private fun updateUi(crime: Crime) {
@@ -115,6 +125,9 @@ class CrimeDetailFragment : Fragment(){
                     getString(R.string.crime_report)
                 )
                 startActivity(chooserIntent)
+            }
+            crimeSuspect.text = crime.suspect.ifEmpty {
+                getString(R.string.crime_suspect_text)
             }
         }
     }
