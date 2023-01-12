@@ -2,6 +2,7 @@ package ru.stas.criminalintent2022
 
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
@@ -26,6 +27,8 @@ class CrimeListFragment: Fragment() {
 
     private val crimeListViewModel: CrimeListViewModel by viewModels()
 
+    private var crimeForDeletion = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val menuHost: MenuHost = requireActivity()
@@ -37,6 +40,14 @@ class CrimeListFragment: Fragment() {
                 return when (menuItem.itemId) {
                     R.id.new_crime -> {
                         showNewCrime()
+                        true
+                    }R.id.delete_crime -> {
+                        crimeForDeletion = true
+                        Toast.makeText(
+                            requireContext(),
+                            "SELECT CRIME TO DELETE",
+                            Toast.LENGTH_LONG
+                        ).show()
                         true
                     }
                     else -> false
@@ -73,14 +84,29 @@ class CrimeListFragment: Fragment() {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 crimeListViewModel.crimes.collect { crimes ->
                     binding.crimeRecyclerView.adapter = CrimeListAdapter(crimes) { crimeId ->
-                        findNavController().navigate(
-                            CrimeListFragmentDirections.showCrimeDetail(
-                                crimeId
+                        if (crimeForDeletion) {
+                            deleteCrime(crimeId)
+                            crimeForDeletion = false
+                        } else {
+                            findNavController().navigate(
+                                CrimeListFragmentDirections.showCrimeDetail(crimeId)
                             )
-                        )
+                        }
                     }
+
                 }
             }
+        }
+    }
+    private fun deleteCrime(uid: UUID) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            val delCrime = Crime(
+                id = uid,
+                title = "",
+                date = Date(),
+                isSolved = false
+            )
+            crimeListViewModel.deleteCrime(delCrime)
         }
     }
     override fun onDestroyView() {

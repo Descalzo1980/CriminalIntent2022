@@ -24,4 +24,6 @@ interface CrimeDao {
     @Insert
     suspend fun addCrime(crime: Crime)
 
+    @Delete
+    suspend fun deleteCrime(crime: Crime)
 }

@@ -11,22 +11,21 @@ import java.util.*
 
 class CrimeListAdapter(
     private val crimes : List<Crime>,
-    private val onCrimeClicked: (crimeId: UUID) -> Unit
+    private val onCrimeClicked: (crimeId: UUID) -> Unit,
+//    private val onDeleteClicked: (crimeId: UUID) -> Unit
     ) : RecyclerView.Adapter<CrimeListAdapter.CrimeHolder>(){
 
 
     inner class CrimeHolder(private val binding: ListItemCrimeBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(crime: Crime, onCrimeClicked:(crimeId: UUID)->Unit) {
             binding.crimeTitle.text = crime.title
-            /*с форматирование не работает перезапись времени*/
-//            val current = LocalDateTime.now()
-//            val simpleDateFormat = DateTimeFormatter.ofPattern(""""EEEE,MMMM dd, yyyy"""")
-//            val formatted = current.format(simpleDateFormat)
-//            binding.crimeDate.text = formatted.toString()
             binding.crimeDate.text = crime.date.toString()
             binding.root.setOnClickListener {
                 onCrimeClicked(crime.id)
             }
+//            binding.root.setOnClickListener {
+//                onDeleteClicked(crime.id)
+//            }
             binding.crimeSolved.visibility =
                 when {
                     crime.isSolved -> View.VISIBLE
