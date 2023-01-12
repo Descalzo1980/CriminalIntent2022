@@ -7,6 +7,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import ru.stas.criminalintent2022.database.CrimeDatabase
+import ru.stas.criminalintent2022.database.migration_1_2
 import java.util.*
 
 private const val DATABASE_NAME = "crime-database"
@@ -21,7 +22,9 @@ class CrimeRepository private constructor(
             context.applicationContext,
             CrimeDatabase::class.java,
             DATABASE_NAME
-        ).build()
+        )
+        .addMigrations(migration_1_2)
+        .build()
 
     fun getCrimes(): Flow<List<Crime>> = database.crimeDao().getCrimes()
 

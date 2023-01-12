@@ -55,20 +55,6 @@ class CrimeListFragment: Fragment() {
             }
         })
     }
-    private fun showNewCrime() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            val newCrime = Crime(
-                id = UUID.randomUUID(),
-                title = "",
-                date = Date(),
-                isSolved = false
-            )
-            crimeListViewModel.addCrime(newCrime)
-            findNavController().navigate(
-                CrimeListFragmentDirections.showCrimeDetail(newCrime.id)
-            )
-        }
-    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -96,6 +82,20 @@ class CrimeListFragment: Fragment() {
 
                 }
             }
+        }
+    }
+    private fun showNewCrime() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            val newCrime = Crime(
+                id = UUID.randomUUID(),
+                title = "",
+                date = Date(),
+                isSolved = false
+            )
+            crimeListViewModel.addCrime(newCrime)
+            findNavController().navigate(
+                CrimeListFragmentDirections.showCrimeDetail(newCrime.id)
+            )
         }
     }
     private fun deleteCrime(uid: UUID) {
