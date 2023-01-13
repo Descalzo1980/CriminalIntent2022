@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ИнтентоКриминал</string>
+    <string name="crime_title_hint">Введите название преступления.</string>
+    <string name="crime_title_label">Название</string>
+    <string name="crime_details_label">Подробности</string>
+    <string name="crime_solved_label">Решение</string>
+    <string name="new_crime">Новое преступление</string>
+    <string name="delete_crime">Удалить преступление</string>
+    <string name="crime_suspect_text">Выберите подозреваемого</string>
+    <string name="crime_report_text">Отправить отчет о преступлении</string>
+    <string name="crime_report">%1$s! Преступление было раскрыто на %2$s. %3$s, г %4$s
+</string>
+    <string name="crime_report_solved">Дело раскрыто</string>
+    <string name="crime_report_unsolved">Дело не раскрыто</string>
+    <string name="crime_report_no_suspect">подозреваемых нет.</string>
+    <string name="crime_report_suspect">подозреваемый — %s.</string>
+    <string name="crime_report_subject">Отчет о преступном умысле</string>
+    <string name="send_report">Отправить информацию о преступлениях и пересечениях</string>
+</resources>

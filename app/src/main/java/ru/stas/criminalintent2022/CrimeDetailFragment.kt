@@ -13,6 +13,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.FileProvider
+import androidx.core.view.doOnLayout
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
@@ -26,6 +28,7 @@ import kotlinx.coroutines.launch
 import ru.stas.CrimeDetailViewModel
 import ru.stas.CrimeDetailViewModelFactory
 import ru.stas.criminalintent2022.databinding.FragmentCrimeDetailBinding
+import java.io.File
 import java.util.Date
 
 private const val DATE_FORMAT = "EEE, MMM, dd"
@@ -44,9 +47,21 @@ class CrimeDetailFragment : Fragment(){
         CrimeDetailViewModelFactory(args.crimeId)
     }
 
+    private var photoName: String? = null
     private val selectSuspect = registerForActivityResult(
         ActivityResultContracts.PickContact()
     ){uri: Uri? -> uri?.let { parseContactSelection(it) }}
+
+    private val takePhoto = registerForActivityResult(
+        ActivityResultContracts.TakePicture()
+    ){didTakePhoto: Boolean ->
+        if (didTakePhoto && photoName != null) {
+            crimeDetailViewModel.updateCrime { oldCrime ->
+                oldCrime.copy(photoFileName = photoName)
+            }
+        }
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -100,11 +115,24 @@ class CrimeDetailFragment : Fragment(){
             selectSuspect.launch(null)
 
         }
-        val selectSuspectIntent = selectSuspect.contract.createIntent(
-            requireContext(),
-            null
-        )
-        binding.crimeSuspect.isEnabled = canResolveIntent(selectSuspectIntent)
+
+
+        binding.crimeCamera.setOnClickListener {
+            photoName = "IMG_${Date()}.JPG"
+            val photoFile = File(requireContext().applicationContext.filesDir,
+                photoName)
+            val photoUri = FileProvider.getUriForFile(
+                requireContext(),
+                "ru.stas.criminalintent2022.fileprovider",
+                photoFile
+            )
+            takePhoto.launch(photoUri)
+            val selectSuspectIntent = selectSuspect.contract.createIntent(
+                requireContext(),
+                null
+            )
+            binding.crimeSuspect.isEnabled = canResolveIntent(selectSuspectIntent)
+        }
     }
 
     private fun updateUi(crime: Crime) {
@@ -138,6 +166,7 @@ class CrimeDetailFragment : Fragment(){
             crimeSuspect.text = crime.suspect.ifEmpty {
                 getString(R.string.crime_suspect_text)
             }
+            updatePhoto(crime.photoFileName)
         }
     }
 
@@ -177,7 +206,27 @@ class CrimeDetailFragment : Fragment(){
             )
         return resolvedActivity != null
     }
-
+    private fun updatePhoto(photoFileName: String?) {
+        if (binding.crimePhoto.tag != photoFileName) {
+            val photoFile = photoFileName?.let {
+                File(requireContext().applicationContext.filesDir, it)
+            }
+            if (photoFile?.exists() == true) {
+                binding.crimePhoto.doOnLayout { measuredView ->
+                    val scaledBitmap = getScaledBitmap(
+                        photoFile.path,
+                        measuredView.width,
+                        measuredView.height
+                    )
+                    binding.crimePhoto.setImageBitmap(scaledBitmap)
+                    binding.crimePhoto.tag = photoFileName
+                }
+            } else {
+                binding.crimePhoto.setImageBitmap(null)
+                binding.crimePhoto.tag = null
+            }
+        }
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
